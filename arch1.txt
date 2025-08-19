@@ -1,0 +1,159 @@
+#include "fdf.h"
+
+static void	checker(int argc, char **argv);
+
+void	my_mlx_pixel_put(t_frame *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+void draw(t_display *dsply)
+{
+	int	x;
+	int	y;
+	t_frame *img = dsply->oframe;
+	t_map *mymap = dsply->mymap;
+
+	y = 0;
+	while (y < mymap->height)
+	{
+		x = 0;
+		while (x < mymap->width)
+		{
+			printf ("%d ", mymap->grid[y][x]);
+			if (mymap->grid[y][x] > 0)
+				my_mlx_pixel_put (img, ((x - (mymap->width / 2)) * mymap->zoom) + (WIDTH / 2),
+										((y - (mymap->height / 2))* mymap->zoom) + (HEIGHT / 2),
+										0xff0000);
+			x ++;
+		}
+		printf ("\n");
+		y ++;
+	}
+}
+
+void redraw_zoom(t_display *dsply)
+{
+	int	x;
+	int	y;
+	t_frame *img = dsply->zframe;
+	t_map *mymap = dsply->mymap;
+
+	dsply->zframe->img = mlx_new_image(dsply->mlx, WIDTH, HEIGHT);
+	dsply->zframe->addr = mlx_get_data_addr(dsply->zframe->img,
+							&dsply->zframe->bits_per_pixel,
+							&dsply->zframe->line_length,
+							&dsply->zframe->endian);
+
+	y = 0;
+	while (y < mymap->height)
+	{
+		x = 0;
+		while (x < mymap->width)
+		{
+			if (mymap->grid[y][x] > 0)
+				my_mlx_pixel_put (img, ((x - (mymap->width / 2)) * mymap->zoom) + (WIDTH / 2) + dsply->zoom,
+										((y - (mymap->height / 2))* mymap->zoom) + (HEIGHT / 2) + dsply->zoom,
+										0xff0000);
+			x ++;
+		}
+		y ++;
+	}
+	mlx_put_image_to_window(dsply->mlx, dsply->window, dsply->zframe->img, 0, 0);
+}
+
+int	mouse_hook(int button, int x, int y, void *param)
+{
+	t_display *disp = (t_display *)param;
+	(void)x;
+	(void)y;
+
+	if (button == 4) // scroll up
+	{
+		if (disp->zoom < 120)
+			disp->zoom += 5;
+		redraw_zoom(disp);
+	}
+	else if (button == 5) // scroll down
+	{
+		if (disp->zoom > -120)
+			disp->zoom -= 5;
+		redraw_zoom(disp);
+	}
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_map	*mymap;
+
+	checker (argc, argv);
+	mymap = mapfromfile (argv[1]);
+	if (!mymap)
+		return (-1);
+	mymap->zoom = fmin(WIDTH / (mymap->width * 2), HEIGHT / (mymap->height * 2));
+	
+
+	// mlx
+	// void		*dsply->mlx;
+	// void		*dsply->window;
+	t_display	*dsply;
+
+	dsply = malloc (sizeof (t_display));
+	dsply->oframe = malloc (sizeof (t_frame));
+	dsply->zframe = malloc (sizeof (t_frame));
+	dsply->mlx = malloc (sizeof (void *));
+	dsply->window = malloc (sizeof (void *));
+	dsply->mymap = mymap;
+	dsply->zoom = 0;
+
+
+	dsply->mlx = mlx_init();
+	dsply->window = mlx_new_window (dsply->mlx, WIDTH, HEIGHT, "khaldoun");
+	dsply->oframe->img = mlx_new_image(dsply->mlx, WIDTH, HEIGHT);
+	dsply->oframe->addr = mlx_get_data_addr(dsply->oframe->img,
+							&dsply->oframe->bits_per_pixel,
+							&dsply->oframe->line_length,
+							&dsply->oframe->endian);
+	dsply->zoom = mymap->zoom;
+	draw (dsply);
+	mlx_put_image_to_window(dsply->mlx, dsply->window, dsply->oframe->img, 0, 0);
+	mlx_mouse_hook (dsply->window, mouse_hook, dsply);
+	mlx_loop (dsply->mlx);
+	// end of mlx
+
+
+	// tester
+	int	x = 0;
+	int	y = 0;
+
+	printf ("zoom is %f\n", mymap->zoom);
+	printf ("width is %d\n", mymap->width);
+	printf ("height is %d\n", mymap->height);
+	printf ("min is %d\n", mymap->z_min);
+	printf ("max is %d\n", mymap->z_max);
+
+	while (y < mymap->height)
+	{
+		x = 0;
+		while (x < mymap->width)
+		{
+			printf ("%d ", mymap->grid[y][x]);
+			x ++;
+		}
+		printf ("\n");
+		y ++;
+	}
+
+}
+
+static void	checker(int argc, char **argv)
+{
+	if (argc != 2)
+		error_exit ("Unacceptable number of arguments");
+	if (!argv | !argv[1])
+		error_exit ("Unavailable fdf file");
+}
