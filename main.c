@@ -1,18 +1,7 @@
 #include "fdf.h"
 
 static void	checker(int argc, char **argv);
-void clear_map(t_map *mymap)
-{
-	int	i;
-
-	i = 0;
-	while (mymap->grid[i])
-	{
-		free (mymap->grid[i]);
-		i ++;
-	}
-	free (mymap);
-}
+void clear_map(t_map *mymap);
 
 int	main(int argc, char **argv)
 {
@@ -39,7 +28,19 @@ static void	checker(int argc, char **argv)
 {
 	if (argc != 2)
 		error_exit ("Unacceptable number of arguments");
-		// check if it is executable ??
 	if (!argv | !argv[1])
 		error_exit ("Unavailable fdf file");
+}
+
+void clear_map(t_map *mymap)
+{
+	int	i;
+
+	i = 0;
+	while (mymap->grid[i])
+	{
+		free (mymap->grid[i]);
+		i ++;
+	}
+	free (mymap);
 }
