@@ -41,8 +41,11 @@ typedef struct	s_data {
 }	t_data;
 
 typedef struct s_vars {
+	int		height;
 	void	*mlx;
 	void	*window;
+	void	*img;
+	t_point	**points;
 }	t_vars;
 
 typedef struct s_lmath{
@@ -56,12 +59,12 @@ void	free_str_arr(char **str);
 void	perror_exit(t_map *map);
 void	error_exit(char *str);
 int		str_arr_size (char	**arr);
-void *free_null(void *p);
+void	*free_null(void *p);
 t_map	*mapfromfile(char *path);
 int		fill_map (int fd, t_map *my_map);
 void	get_minmax(t_map *my_map);
 t_point	**clear_points_array(t_point **points, int h);
-t_point **grid_to_points(t_point **points, t_map *my_map);
+t_point	**grid_to_points(t_point **points, t_map *my_map);
 int		graphics_mlx(t_point **points, int w, int h);
 void	my_mlx_pixel_put(t_data *frame, t_point a, int color);
 void	flip(t_point *a, t_point *b);

@@ -7,6 +7,8 @@ int	main(int argc, char **argv)
 {
 	t_map	*mymap;
 	t_point **points;
+	int		h;
+	int		w;
 
 	checker (argc, argv);
 	mymap = mapfromfile (argv[1]);
@@ -19,10 +21,14 @@ int	main(int argc, char **argv)
 		clear_map (mymap);
 		return (-1);
 	}
-	graphics_mlx (points, mymap->width, mymap->height);
-	clear_points_array (points, mymap->height);
+	w = mymap->width;
+	h = mymap->height;
 	clear_map (mymap);
+	graphics_mlx (points, w, h);
 }
+
+// make files fix
+// add hook for pressing x
 
 static void	checker(int argc, char **argv)
 {
