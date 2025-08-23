@@ -114,15 +114,12 @@ int	**populate_grid(t_list *row_list, t_map *my_map)
 	x = 0;
 	while (x < my_map->height)
 	{
-		y = 0;
 		grid[x] = malloc (sizeof (int) * my_map->width);
 		if (!grid[x])
 			return (clear_int_array (grid, x));
-		while (y < my_map->width)
-		{
+		y = -1;
+		while (++y < my_map->width)
 			grid[x][y] = ((int *)row_list->content)[y];
-			y ++;
-		}
 		row_list = row_list->next;
 		x ++;
 	}
