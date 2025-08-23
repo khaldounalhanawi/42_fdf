@@ -72,5 +72,7 @@ void	draw_line(t_data *frame, t_point a, t_point b, int color);
 void	initial_zoom(t_point **points, int w, int h);
 void	iso_all(t_point **points, int w, int h);
 void	draw_segments(t_data *frame, t_point **points, int w, int h);
+int		**clear_int_array(int **grid, int h);
+
 
 #endif
