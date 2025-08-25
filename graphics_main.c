@@ -21,6 +21,51 @@ void init_frame(t_data *frame, void *mymlx)
 							&frame->endian);
 }
 
+void get_min_max(int *minmax, t_point **points, int w, int h)
+{
+	int	i;
+	int	y;
+
+	minmax[0] = points[0][0].x;
+	minmax[1] = points[0][0].x;
+	i = 0;
+	while (i < h)
+	{
+		y = 0;
+		while (y < w)
+		{
+			if (points[i][y].x < minmax[0])
+				minmax[0] = points[i][y].x;
+			if (points[i][y].x > minmax[1])
+				minmax[1] = points[i][y].x;
+			y++;
+		}
+		i ++;
+	}
+}
+
+void center_points(t_point **points, int w, int h)
+{
+	int	i;
+	int	y;
+	int minmax[2];
+	
+	get_min_max (minmax, points, w, h);
+	int offset = 0;
+	i = 0;
+		while (i < h)
+	{
+		y = 0;
+		while (y < w)
+		{
+			offset = (WIDTH / 2) - ((minmax[0] + minmax[1]) / 2);
+			points[i][y].x += offset;
+			y++;
+		}
+		i ++;
+	}
+}
+
 int		graphics_mlx(t_point **points, int w, int h)
 {
 	void	*mymlx;
@@ -38,6 +83,7 @@ int		graphics_mlx(t_point **points, int w, int h)
 	vars.points = points;
 	initial_zoom (points, w, h);
 	iso_all (points, w, h);
+	center_points (points, w, h);
 	draw_segments (&frame, points, w, h);
 	mlx_put_image_to_window (mymlx, mlx_window, frame.img, 0, 0);
 	mlx_key_hook (vars.window, key_exe, &vars);

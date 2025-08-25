@@ -45,3 +45,17 @@ void *free_null(void *p)
 		free (p);
 	return (NULL);
 }
+
+t_point	**clear_int_array(int **grid, int h)
+{
+	int	i;
+
+	i = 0;
+	while (i < h)
+	{
+		free (grid[i]);
+		i ++;
+	}
+	free (grid);
+	return (NULL);
+}

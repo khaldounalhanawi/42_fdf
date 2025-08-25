@@ -10,10 +10,10 @@ OBJS = $(CFILES:.c=.o)
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	cc $(CFLAGS) $(OBJS) $(CLINKS) $(EXTRA) -o $(NAME)
+	cc $(CFLAGS) $(OBJS) $(CLINKS) $(EXTRA) -o $(NAME) -g
 
 %.o: %.c fdf.h
-	cc $(CFLAGS) $(CHEADERS) -I. -c $< -o $@
+	cc $(CFLAGS) $(CHEADERS) -I. -c $< -o $@ -g
 
 clean:
 	rm -f $(OBJS)

@@ -50,3 +50,8 @@ void clear_map(t_map *mymap)
 	}
 	free (mymap);
 }
+
+// ./fdf test_maps/elem2.fdf
+// fdf(19372,0x1fbf9a0c0) malloc: Double free of object 0x12f6069a0
+// fdf(19372,0x1fbf9a0c0) malloc: *** set a breakpoint in malloc_error_break to debug
+// fish: Job 1, './fdf test_maps/elem2.fdf' terminated by signal SIGABRT (Abort)
