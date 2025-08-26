@@ -6,26 +6,26 @@
 /*   By: kalhanaw <kalhanaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 14:42:40 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/06/11 16:03:58 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:10:01 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <unistd.h>
 
-char	*searcher(char **rest, char **temp);
-char	*extract(char **rest);
+char		*searcher(char **rest, char **temp);
+static char	*extract(char **rest);
 
-static char	*free_all(char **full, char **rest)
+char	*free_all(char **full, char **rest)
 {
 	if (full && *full)
 	{
-		free (*full);
+		free(*full);
 		*full = NULL;
 	}
 	if (rest && *rest)
 	{
-		free (*rest);
+		free(*rest);
 		*rest = NULL;
 	}
 	return (NULL);
@@ -35,10 +35,10 @@ static int	sticher(char *buf, char **rest)
 {
 	char	*temp;
 
-	temp = ft_strjoin (*rest, buf);
+	temp = ft_strjoin(*rest, buf);
 	if (!temp)
 		return (-1);
-	free (*rest);
+	free(*rest);
 	*rest = NULL;
 	*rest = temp;
 	return (1);
@@ -49,23 +49,23 @@ static char	*looper(int fd, char **rest)
 	char	*buf;
 	int		letters;
 
-	buf = malloc ((BUFFER_SIZE + 1) * sizeof (char));
+	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
 		return (free_all(rest, NULL));
-	letters = read (fd, buf, BUFFER_SIZE);
+	letters = read(fd, buf, BUFFER_SIZE);
 	while (letters > 0)
 	{
 		buf[letters] = '\0';
-		if (sticher (buf, rest) == -1)
-			return (free_all (rest, &buf));
-		if (ft_strchr (buf, '\n'))
+		if (sticher(buf, rest) == -1)
+			return (free_all(rest, &buf));
+		if (ft_strchr(buf, '\n'))
 			break ;
-		letters = read (fd, buf, BUFFER_SIZE);
+		letters = read(fd, buf, BUFFER_SIZE);
 	}
 	if ((letters == 0 && **rest == '\0') || (letters < 0))
 		return (free_all(rest, &buf));
 	free_all(NULL, &buf);
-	return (extract (rest));
+	return (extract(rest));
 }
 
 char	*get_next_line(int fd)
@@ -76,7 +76,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!rest)
 	{
-		rest = ft_strdup ("");
+		rest = ft_strdup("");
 		if (!rest)
 			return (NULL);
 	}
@@ -91,13 +91,13 @@ static char	*extract(char **rest)
 		return (NULL);
 	if (!ft_strchr(*rest, '\n'))
 	{
-		temp = ft_strdup (*rest);
+		temp = ft_strdup(*rest);
 		if (!temp)
 			return (free_all(rest, NULL));
 		free_all(rest, NULL);
 		return (temp);
 	}
-	temp = ft_strdup (ft_strchr(*rest, '\n') + 1);
+	temp = ft_strdup(ft_strchr(*rest, '\n') + 1);
 	if (!temp)
 		return (free_all(rest, NULL));
 	return (searcher(rest, &temp));

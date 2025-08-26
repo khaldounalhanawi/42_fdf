@@ -6,14 +6,12 @@
 /*   By: kalhanaw <kalhanaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:18:41 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/06/11 15:20:03 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:10:00 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <unistd.h>
-
-char	*free_all(char **full, char **rest);
 
 size_t	ft_strlen(const char *str)
 {
@@ -31,7 +29,7 @@ char	*ft_strchr(const char *s, int c)
 {
 	char	ch;
 
-	ch = (char) c;
+	ch = (char)c;
 	if (ch == '\0')
 	{
 		while (*s != ch)
@@ -62,7 +60,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[len2])
 		len2++;
 	len_total = len1 + len2 + 1;
-	p = malloc (len_total * sizeof(char));
+	p = malloc(len_total * sizeof(char));
 	if (!p)
 		return (NULL);
 	original = p;
@@ -83,7 +81,7 @@ char	*ft_strdup(const char *s1)
 	len = 0;
 	while (s1[len])
 		len++;
-	p = malloc((len + 1) * (size_t) sizeof(char));
+	p = malloc((len + 1) * (size_t)sizeof(char));
 	if (!p)
 		return (NULL);
 	record = p;
@@ -102,13 +100,13 @@ char	*searcher(char **rest, char **temp)
 
 	income = *rest;
 	new_len = ft_strchr(income, '\n') - income + 1;
-	clean = malloc ((new_len + 1) * sizeof (char));
+	clean = malloc((new_len + 1) * sizeof(char));
 	if (!clean)
 		return (free_all(temp, rest));
 	record = clean;
 	while (*income != '\n')
-		*clean ++ = *income++;
-	*clean ++ = *income++;
+		*clean++ = *income++;
+	*clean++ = *income++;
 	*clean = '\0';
 	free_all(rest, NULL);
 	*rest = *temp;
