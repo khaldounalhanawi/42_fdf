@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fn_mapfromfile_fill_map.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kalhanaw <kalhanaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/26 18:05:53 by kalhanaw          #+#    #+#             */
+/*   Updated: 2025/09/01 14:48:23 by kalhanaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int		*atoi_arr(char **str_arr, t_map *my_map);
@@ -20,7 +32,6 @@ int	fill_map(int fd, t_map *my_map)
 		return (-1);
 	}
 	ft_lstclear(&row_list, free);
-	get_minmax(my_map);
 	return (0);
 }
 
@@ -61,15 +72,15 @@ int	fill_row_vals(int fd, t_list *head_row, t_map *my_map)
 	temp_str_arr = ft_split(row_str, ' ');
 	if (!temp_str_arr)
 	{
-		free(row_str);
-		return (-1);
+		drain_gnl(fd, row_str);
+		return (-2);
 	}
 	head_row->content = atoi_arr(temp_str_arr, my_map);
 	if (!head_row->content)
 	{
+		drain_gnl(fd, row_str);
 		free_str_arr(temp_str_arr);
-		free(row_str);
-		return (-1);
+		return (-2);
 	}
 	free_str_arr(temp_str_arr);
 	free(row_str);
@@ -80,21 +91,22 @@ t_list	*create_row_llist(int fd, t_map *my_map)
 {
 	t_list	*head_row;
 	t_list	*next_row;
+	int		filler;
 
 	head_row = NULL;
 	while (1)
 	{
 		next_row = ft_lstnew(NULL);
 		if (!next_row)
-		{
-			ft_lstclear(&head_row, free);
-			return (NULL);
-		}
-		if (fill_row_vals(fd, next_row, my_map) != 0)
+			return (lstclear_nfree(&head_row, NULL));
+		filler = fill_row_vals(fd, next_row, my_map);
+		if (filler == -1)
 		{
 			free(next_row);
 			break ;
 		}
+		else if (filler == -2)
+			return (lstclear_nfree(&head_row, next_row));
 		else
 			ft_lstadd_back(&head_row, next_row);
 	}

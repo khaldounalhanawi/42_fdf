@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   graphics_helpers.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kalhanaw <kalhanaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/26 18:07:35 by kalhanaw          #+#    #+#             */
+/*   Updated: 2025/08/26 18:14:32 by kalhanaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	my_mlx_pixel_put(t_data *frame, t_point a, int color)
@@ -49,8 +61,8 @@ void	x_get_min_max(int *minmax, t_point **points, int w, int h)
 
 void	y_get_min_max(int *minmax, t_point **points, int w, int h)
 {
-	int i;
-	int y;
+	int	i;
+	int	y;
 
 	minmax[0] = points[0][0].y;
 	minmax[1] = points[0][0].y;

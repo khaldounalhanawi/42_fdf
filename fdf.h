@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kalhanaw <kalhanaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/26 18:48:13 by kalhanaw          #+#    #+#             */
+/*   Updated: 2025/09/01 14:48:06 by kalhanaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 # define ANGLE 40
@@ -9,7 +21,7 @@
 
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
-# include "minilibx-linux/mlx.h"
+# include "mlx.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>
@@ -67,7 +79,6 @@ int			str_arr_size(char **arr);
 void		*free_null(void *p);
 t_map		*mapfromfile(char *path);
 int			fill_map(int fd, t_map *my_map);
-void		get_minmax(t_map *my_map);
 t_point		**clear_points_array(t_point **points, int h);
 t_point		**grid_to_points(t_point **points, t_map *my_map);
 int			graphics_mlx(t_point **points, int w, int h);
@@ -83,5 +94,7 @@ void		center_points(t_point **points, int w, int h);
 void		zoom_extents(t_point **points, int w, int h);
 void		x_get_min_max(int *minmax, t_point **points, int w, int h);
 void		y_get_min_max(int *minmax, t_point **points, int w, int h);
+void		drain_gnl(int fd, char *p);
+t_list		*lstclear_nfree(t_list **head_row, t_list *p);
 
 #endif

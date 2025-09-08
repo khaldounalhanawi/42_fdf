@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:18:41 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/08/25 16:10:00 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/08/26 18:46:14 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*ft_strdup(const char *s1)
 	len = 0;
 	while (s1[len])
 		len++;
-	p = malloc((len + 1) * (size_t)sizeof(char));
+	p = malloc ((len + 1) * (size_t) sizeof (char));
 	if (!p)
 		return (NULL);
 	record = p;

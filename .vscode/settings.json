@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "stdlib.h": "c",
-        "*.f": "c",
-        "unordered_map": "c",
-        "get_next_line.h": "c",
-        "mlx.h": "c"
-    }
-}

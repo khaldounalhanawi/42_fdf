@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fn_mapfromfile.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kalhanaw <kalhanaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/26 18:05:43 by kalhanaw          #+#    #+#             */
+/*   Updated: 2025/08/26 18:12:38 by kalhanaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 static t_map	*initiate_map(void);
@@ -41,7 +53,7 @@ static t_map	*initiate_map(void)
 
 void	free_grid(t_map *my_map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (my_map->grid)

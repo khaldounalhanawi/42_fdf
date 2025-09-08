@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   graphics_main.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kalhanaw <kalhanaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/26 18:07:38 by kalhanaw          #+#    #+#             */
+/*   Updated: 2025/08/26 18:15:10 by kalhanaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int	close_window(t_vars *vars)
@@ -43,10 +55,10 @@ void	project_points(t_point **points, int w, int h)
 
 int	graphics_mlx(t_point **points, int w, int h)
 {
-	void *mymlx;
-	void *mlx_window;
-	t_data frame;
-	t_vars vars;
+	void	*mymlx;
+	void	*mlx_window;
+	t_data	frame;
+	t_vars	vars;
 
 	mymlx = mlx_init();
 	mlx_window = mlx_new_window(mymlx, WIDTH, HEIGHT, "khaldoun");

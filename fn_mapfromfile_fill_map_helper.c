@@ -1,24 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fn_mapfromfile_fill_map_helper.c                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kalhanaw <kalhanaw@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/26 18:06:01 by kalhanaw          #+#    #+#             */
+/*   Updated: 2025/09/01 14:48:05 by kalhanaw         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-void	get_minmax(t_map *my_map)
+void	drain_gnl(int fd, char *p)
 {
-	int	w;
-	int	h;
+	char	*str;
 
-	my_map->z_min = my_map->grid[0][0];
-	my_map->z_max = my_map->grid[0][0];
-	h = 0;
-	while (h < my_map->height)
+	str = NULL;
+	str = get_next_line(fd);
+	while (str)
 	{
-		w = 0;
-		while (w < my_map->width)
-		{
-			if (my_map->grid[h][w] > my_map->z_max)
-				my_map->z_max = my_map->grid[h][w];
-			else if (my_map->grid[h][w] < my_map->z_min)
-				my_map->z_min = my_map->grid[h][w];
-			w ++;
-		}
-		h ++;
+		free(str);
+		str = get_next_line(fd);
 	}
+	if (p)
+		free(p);
+	return ;
+}
+
+t_list	*lstclear_nfree(t_list **head_row, t_list *p)
+{
+	ft_lstclear(head_row, free);
+	if (p)
+		free(p);
+	return (NULL);
 }

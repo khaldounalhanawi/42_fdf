@@ -24,8 +24,8 @@ BOBJS = ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o ft_lstadd_back.o
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+$(NAME): $(OBJS) $(BOBJS)
+	ar rcs $(NAME) $(OBJS) $(BOBJS)
 
 %.o: %.c libft.h
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -37,8 +37,7 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+	
 
-bonus: $(OBJS) $(BOBJS)
-	ar rcs $(NAME) $(OBJS) $(BOBJS)
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re 
