@@ -15,7 +15,7 @@
 # define ANGLE 40
 # define WIDTH 1500
 # define HEIGHT 800
-# define HEIGHT_SCALE 1
+# define HEIGHT_SCALE 4
 # define ESC_KEY 65307
 # define M_PI 3.14159265358979323846
 

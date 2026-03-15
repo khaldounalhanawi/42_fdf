@@ -1,8 +1,13 @@
 NAME = fdf
 CFLAGS = -Wall -Wextra -Werror
+
+MLX_DIR = ./libs/minilibx-linux
+MLX_L = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+INCLUDE_MLX = $(MLX_DIR)
+
 CHEADERS = -I ./get_next_line -I . -I ./libft -I /usr/local/include
 CLINKS = -L ./get_next_line -l get_next_line -L ./libft -l ft
-EXTRA = -L /usr/local/lib -lmlx -lX11 -lm -lXext
+# EXTRA = -L /usr/local/lib -lmlx -lX11 -lm -lXext
 CFILES = fn_grid_to_points.c graphics_draw_segments.c \
 		fn_helpers_I.c graphics_helpers.c \
 		fn_helpers_II.c graphics_main.c \
@@ -13,13 +18,17 @@ CFILES = fn_grid_to_points.c graphics_draw_segments.c \
 		
 OBJS = $(CFILES:.c=.o)
 
+MLX = $(MLX_DIR)/libmlx.a
 LIBFT_DIR = ./libft
 GNLINE_DIR = ./get_next_line
 
 all : LIBFT GNLINE $(NAME)
 
-$(NAME): $(OBJS)
-	cc $(CFLAGS) $(OBJS) $(CLINKS) -o $(NAME) $(EXTRA) -g
+$(NAME): $(MLX) $(OBJS)
+	cc $(CFLAGS) $(OBJS) $(CLINKS) -o $(NAME) $(MLX_L) -g
+
+$(MLX) :
+	$(MAKE) -C $(MLX_DIR) CFLAGS="-w"
 
 GNLINE:
 	make -C $(GNLINE_DIR)
@@ -28,7 +37,7 @@ LIBFT:
 	make -C $(LIBFT_DIR)
 
 %.o: %.c fdf.h
-	cc $(CFLAGS) $(CHEADERS) -I. -c $< -o $@ -g
+	cc $(CFLAGS) $(CHEADERS) -I. -I $(INCLUDE_MLX) -c $< -o $@ -g
 
 clean:
 	rm -f $(OBJS)
@@ -42,5 +51,5 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re LIBFT GNLINE
 
