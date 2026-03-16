@@ -2,6 +2,8 @@
 
 # FdF
 
+![FdF screenshot](screenshot3.png)
+
 A wireframe 3D landscape renderer. Reads a `.fdf` heightmap file and displays it as an isometric wireframe using MiniLibX, written in C.
 
 ## 🚀 About
@@ -36,3 +38,4 @@ Each number represents an altitude. Column = x, row = y, value = z:
 0  0 10 10  0  0
 0  0  0  0  0  0
 ```
+![FdF screenshot2](screenshot1.png)
